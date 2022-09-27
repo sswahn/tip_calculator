@@ -51,7 +51,7 @@
         return event.innerText
       }
       const value = event.parentElement.firstElementChild.value
-      return value.length < 3 ? `${value}%` : value
+      return value.includes("%") ? value : `${value}%`
     }
     
     const calculateTip = (price, percentage) => {
