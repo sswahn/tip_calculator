@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    #custom {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <input id="price" type="text" placeholder="Price">
+    <div id="custom">
+      <input type="text" placeholder="Custom percentage">
+      <button type="button" onClick="getCustomTip(this)">submit</button>
+    </div>
+    <div>
+      <button type="button" onClick="getTip(this)">15%</button>
+      <button type="button" onClick="getTip(this)">18%</button>
+      <button type="button" onClick="getTip(this)">20%</button>
+      <button type="button" onClick="displayCustomTip(this)">...</button>
+      <button type="button" onClick="clearDisplay(this)">Clear</button>
+    </div>
+  </form>
+  
+  <div id="display"></div>
+  
+  
+  <script>
+    const getTip = event => {
+      const price = parseFloat(document.getElementById("price").value)
+      if (!price) {
+        return alert('Please enter a price.')
+      }
+      const display = document.getElementById('display')
+      if (display.firstChild) {
+        display.removeChild(display.firstChild)
+      }
+      const percentage = event.innerText
+      const total = calculateTip(price, percentage)
+      display.appendChild(
+        document.createTextNode(total)
+      )
+    }
+    
+    const calculateTip = (price, percentage) => {
+      return (price * Number(percentage.slice(0, -1)) / 100).toFixed(2)
+    }
+    
+    const getCustomTip = event => {
+      const price = parseFloat(document.getElementById("price").value)
+      if (!price) {
+        return alert('Please enter a price.')
+      }
+      const display = document.getElementById('display')
+      if (display.firstChild) {
+        display.removeChild(display.firstChild)
+      }
+      
+      // check if is custom or not ? :
+      const percentage = event.innerText
+      
+      const total = calculateTip(price, percentage)
+      display.appendChild(
+        document.createTextNode(total)
+      )
+    }
+
+
+    const displayCustomTip = () => {
+      const custom = document.getElementById('custom')
+      custom.style.display === 'block'
+        ? custom.style.display = 'none'
+        : custom.style.display = 'block'
+    }
+    
+    const clearDisplay = event => {
+      const display = document.getElementById('display')
+      display.removeChild(display.firstChild)
+    }
+  </script>
+</body>
+</html>
